@@ -12,13 +12,15 @@ class BoardPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (final pixel in pixels) {
+      final color = colorFromHex(pixel.color)!;
       canvas.drawPoints(
         PointMode.points,
         [Offset(pixel.x, pixel.y)],
         Paint()
-          ..color = colorFromHex(pixel.color)!
+          ..color = color
           ..strokeWidth = 10
-          ..style = PaintingStyle.stroke,
+          ..style =
+              color == Colors.white ? PaintingStyle.fill : PaintingStyle.stroke,
       );
     }
   }
