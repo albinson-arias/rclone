@@ -47,5 +47,5 @@ jobs:
           context: rclone_server/
           push: true
           tags:
-            ghcr.io/albinsonarias/rclone_server:latest
+            ghcr.io/${{ github.actor }}/rclone_server:latest
           labels: ${{ steps.meta.outputs.labels }}
