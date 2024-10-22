@@ -1,0 +1,3 @@
+class: Board
+fields:
+    pixels: List<BoardPixel>

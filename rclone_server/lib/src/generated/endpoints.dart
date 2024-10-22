@@ -12,7 +12,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/board_endpoint.dart' as _i2;
 import '../endpoints/example_endpoint.dart' as _i3;
-import 'package:rclone_server/src/generated/pixel.dart' as _i4;
+import 'package:rclone_server/src/generated/board_pixel.dart' as _i4;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -40,7 +40,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'pixel': _i1.ParameterDescription(
               name: 'pixel',
-              type: _i1.getType<_i4.Pixel>(),
+              type: _i1.getType<_i4.BoardPixel>(),
               nullable: false,
             )
           },

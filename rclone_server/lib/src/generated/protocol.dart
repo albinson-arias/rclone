@@ -12,11 +12,13 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
-import 'example.dart' as _i3;
-import 'pixel.dart' as _i4;
-import 'package:rclone_server/src/generated/pixel.dart' as _i5;
+import 'board.dart' as _i3;
+import 'board_pixel.dart' as _i4;
+import 'example.dart' as _i5;
+import 'protocol.dart' as _i6;
+export 'board.dart';
+export 'board_pixel.dart';
 export 'example.dart';
-export 'pixel.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
@@ -27,8 +29,8 @@ class Protocol extends _i1.SerializationManagerServer {
 
   static final List<_i2.TableDefinition> targetTableDefinitions = [
     _i2.TableDefinition(
-      name: 'pixels',
-      dartName: 'Pixel',
+      name: 'board_pixels',
+      dartName: 'BoardPixel',
       schema: 'public',
       module: 'rclone',
       columns: [
@@ -37,19 +39,19 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
-          columnDefault: 'nextval(\'pixels_id_seq\'::regclass)',
+          columnDefault: 'nextval(\'board_pixels_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
           name: 'x',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _i2.ColumnType.doublePrecision,
           isNullable: false,
-          dartType: 'int',
+          dartType: 'double',
         ),
         _i2.ColumnDefinition(
           name: 'y',
-          columnType: _i2.ColumnType.bigint,
+          columnType: _i2.ColumnType.doublePrecision,
           isNullable: false,
-          dartType: 'int',
+          dartType: 'double',
         ),
         _i2.ColumnDefinition(
           name: 'color',
@@ -61,7 +63,7 @@ class Protocol extends _i1.SerializationManagerServer {
       foreignKeys: [],
       indexes: [
         _i2.IndexDefinition(
-          indexName: 'pixels_pkey',
+          indexName: 'board_pixels_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -85,20 +87,26 @@ class Protocol extends _i1.SerializationManagerServer {
     Type? t,
   ]) {
     t ??= T;
-    if (t == _i3.Example) {
-      return _i3.Example.fromJson(data) as T;
+    if (t == _i3.Board) {
+      return _i3.Board.fromJson(data) as T;
     }
-    if (t == _i4.Pixel) {
-      return _i4.Pixel.fromJson(data) as T;
+    if (t == _i4.BoardPixel) {
+      return _i4.BoardPixel.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i3.Example?>()) {
-      return (data != null ? _i3.Example.fromJson(data) : null) as T;
+    if (t == _i5.Example) {
+      return _i5.Example.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i4.Pixel?>()) {
-      return (data != null ? _i4.Pixel.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i3.Board?>()) {
+      return (data != null ? _i3.Board.fromJson(data) : null) as T;
     }
-    if (t == List<_i5.Pixel>) {
-      return (data as List).map((e) => deserialize<_i5.Pixel>(e)).toList()
+    if (t == _i1.getType<_i4.BoardPixel?>()) {
+      return (data != null ? _i4.BoardPixel.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i5.Example?>()) {
+      return (data != null ? _i5.Example.fromJson(data) : null) as T;
+    }
+    if (t == List<_i6.BoardPixel>) {
+      return (data as List).map((e) => deserialize<_i6.BoardPixel>(e)).toList()
           as dynamic;
     }
     try {
@@ -111,11 +119,14 @@ class Protocol extends _i1.SerializationManagerServer {
   String? getClassNameForObject(Object? data) {
     String? className = super.getClassNameForObject(data);
     if (className != null) return className;
-    if (data is _i3.Example) {
-      return 'Example';
+    if (data is _i3.Board) {
+      return 'Board';
     }
-    if (data is _i4.Pixel) {
-      return 'Pixel';
+    if (data is _i4.BoardPixel) {
+      return 'BoardPixel';
+    }
+    if (data is _i5.Example) {
+      return 'Example';
     }
     className = _i2.Protocol().getClassNameForObject(data);
     if (className != null) {
@@ -126,11 +137,14 @@ class Protocol extends _i1.SerializationManagerServer {
 
   @override
   dynamic deserializeByClassName(Map<String, dynamic> data) {
-    if (data['className'] == 'Example') {
-      return deserialize<_i3.Example>(data['data']);
+    if (data['className'] == 'Board') {
+      return deserialize<_i3.Board>(data['data']);
     }
-    if (data['className'] == 'Pixel') {
-      return deserialize<_i4.Pixel>(data['data']);
+    if (data['className'] == 'BoardPixel') {
+      return deserialize<_i4.BoardPixel>(data['data']);
+    }
+    if (data['className'] == 'Example') {
+      return deserialize<_i5.Example>(data['data']);
     }
     if (data['className'].startsWith('serverpod.')) {
       data['className'] = data['className'].substring(10);
@@ -148,8 +162,8 @@ class Protocol extends _i1.SerializationManagerServer {
       }
     }
     switch (t) {
-      case _i4.Pixel:
-        return _i4.Pixel.t;
+      case _i4.BoardPixel:
+        return _i4.BoardPixel.t;
     }
     return null;
   }

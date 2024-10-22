@@ -11,8 +11,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:rclone_client/src/protocol/pixel.dart' as _i3;
-import 'protocol.dart' as _i4;
+import 'package:rclone_client/src/protocol/board_pixel.dart' as _i3;
+import 'package:rclone_client/src/protocol/board.dart' as _i4;
+import 'protocol.dart' as _i5;
 
 /// {@category Endpoint}
 class EndpointBoard extends _i1.EndpointRef {
@@ -21,7 +22,7 @@ class EndpointBoard extends _i1.EndpointRef {
   @override
   String get name => 'board';
 
-  _i2.Future<void> writePixel(_i3.Pixel pixel) =>
+  _i2.Future<void> writePixel(_i3.BoardPixel pixel) =>
       caller.callServerEndpoint<void>(
         'board',
         'writePixel',
@@ -30,9 +31,8 @@ class EndpointBoard extends _i1.EndpointRef {
 
   /// Returns a stream of pixels. The first message will contain
   /// the full board. Sequential updates will contain a single updated pixel.
-  _i2.Stream<List<_i3.Pixel>> listenToBoard() =>
-      caller.callStreamingServerEndpoint<_i2.Stream<List<_i3.Pixel>>,
-          List<_i3.Pixel>>(
+  _i2.Stream<_i4.Board> listenToBoard() =>
+      caller.callStreamingServerEndpoint<_i2.Stream<_i4.Board>, _i4.Board>(
         'board',
         'listenToBoard',
         {},
@@ -70,7 +70,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i4.Protocol(),
+          _i5.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,

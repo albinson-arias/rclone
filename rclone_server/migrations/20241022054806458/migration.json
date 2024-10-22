@@ -1,0 +1,70 @@
+{
+  "actions": [
+    {
+      "type": "deleteTable",
+      "deleteTable": "pixels"
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "board_pixels",
+        "dartName": "BoardPixel",
+        "module": "rclone",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 6,
+            "isNullable": false,
+            "columnDefault": "nextval('board_pixels_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "x",
+            "columnType": 3,
+            "isNullable": false,
+            "dartType": "double"
+          },
+          {
+            "name": "y",
+            "columnType": 3,
+            "isNullable": false,
+            "dartType": "double"
+          },
+          {
+            "name": "color",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          }
+        ],
+        "foreignKeys": [],
+        "indexes": [
+          {
+            "indexName": "board_pixels_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "type": "tableDropped",
+      "message": "Table \"pixels\" will be dropped.",
+      "table": "pixels",
+      "columns": [],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

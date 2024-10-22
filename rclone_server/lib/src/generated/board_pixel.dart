@@ -13,50 +13,50 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Pixel implements _i1.TableRow, _i1.ProtocolSerialization {
-  Pixel._({
+abstract class BoardPixel implements _i1.TableRow, _i1.ProtocolSerialization {
+  BoardPixel._({
     this.id,
     required this.x,
     required this.y,
     required this.color,
   });
 
-  factory Pixel({
+  factory BoardPixel({
     int? id,
-    required int x,
-    required int y,
+    required double x,
+    required double y,
     required String color,
-  }) = _PixelImpl;
+  }) = _BoardPixelImpl;
 
-  factory Pixel.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Pixel(
+  factory BoardPixel.fromJson(Map<String, dynamic> jsonSerialization) {
+    return BoardPixel(
       id: jsonSerialization['id'] as int?,
-      x: jsonSerialization['x'] as int,
-      y: jsonSerialization['y'] as int,
+      x: (jsonSerialization['x'] as num).toDouble(),
+      y: (jsonSerialization['y'] as num).toDouble(),
       color: jsonSerialization['color'] as String,
     );
   }
 
-  static final t = PixelTable();
+  static final t = BoardPixelTable();
 
-  static const db = PixelRepository._();
+  static const db = BoardPixelRepository._();
 
   @override
   int? id;
 
-  int x;
+  double x;
 
-  int y;
+  double y;
 
   String color;
 
   @override
   _i1.Table get table => t;
 
-  Pixel copyWith({
+  BoardPixel copyWith({
     int? id,
-    int? x,
-    int? y,
+    double? x,
+    double? y,
     String? color,
   });
   @override
@@ -79,26 +79,26 @@ abstract class Pixel implements _i1.TableRow, _i1.ProtocolSerialization {
     };
   }
 
-  static PixelInclude include() {
-    return PixelInclude._();
+  static BoardPixelInclude include() {
+    return BoardPixelInclude._();
   }
 
-  static PixelIncludeList includeList({
-    _i1.WhereExpressionBuilder<PixelTable>? where,
+  static BoardPixelIncludeList includeList({
+    _i1.WhereExpressionBuilder<BoardPixelTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<PixelTable>? orderBy,
+    _i1.OrderByBuilder<BoardPixelTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<PixelTable>? orderByList,
-    PixelInclude? include,
+    _i1.OrderByListBuilder<BoardPixelTable>? orderByList,
+    BoardPixelInclude? include,
   }) {
-    return PixelIncludeList._(
+    return BoardPixelIncludeList._(
       where: where,
       limit: limit,
       offset: offset,
-      orderBy: orderBy?.call(Pixel.t),
+      orderBy: orderBy?.call(BoardPixel.t),
       orderDescending: orderDescending,
-      orderByList: orderByList?.call(Pixel.t),
+      orderByList: orderByList?.call(BoardPixel.t),
       include: include,
     );
   }
@@ -111,11 +111,11 @@ abstract class Pixel implements _i1.TableRow, _i1.ProtocolSerialization {
 
 class _Undefined {}
 
-class _PixelImpl extends Pixel {
-  _PixelImpl({
+class _BoardPixelImpl extends BoardPixel {
+  _BoardPixelImpl({
     int? id,
-    required int x,
-    required int y,
+    required double x,
+    required double y,
     required String color,
   }) : super._(
           id: id,
@@ -125,13 +125,13 @@ class _PixelImpl extends Pixel {
         );
 
   @override
-  Pixel copyWith({
+  BoardPixel copyWith({
     Object? id = _Undefined,
-    int? x,
-    int? y,
+    double? x,
+    double? y,
     String? color,
   }) {
-    return Pixel(
+    return BoardPixel(
       id: id is int? ? id : this.id,
       x: x ?? this.x,
       y: y ?? this.y,
@@ -140,13 +140,13 @@ class _PixelImpl extends Pixel {
   }
 }
 
-class PixelTable extends _i1.Table {
-  PixelTable({super.tableRelation}) : super(tableName: 'pixels') {
-    x = _i1.ColumnInt(
+class BoardPixelTable extends _i1.Table {
+  BoardPixelTable({super.tableRelation}) : super(tableName: 'board_pixels') {
+    x = _i1.ColumnDouble(
       'x',
       this,
     );
-    y = _i1.ColumnInt(
+    y = _i1.ColumnDouble(
       'y',
       this,
     );
@@ -156,9 +156,9 @@ class PixelTable extends _i1.Table {
     );
   }
 
-  late final _i1.ColumnInt x;
+  late final _i1.ColumnDouble x;
 
-  late final _i1.ColumnInt y;
+  late final _i1.ColumnDouble y;
 
   late final _i1.ColumnString color;
 
@@ -171,19 +171,19 @@ class PixelTable extends _i1.Table {
       ];
 }
 
-class PixelInclude extends _i1.IncludeObject {
-  PixelInclude._();
+class BoardPixelInclude extends _i1.IncludeObject {
+  BoardPixelInclude._();
 
   @override
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Pixel.t;
+  _i1.Table get table => BoardPixel.t;
 }
 
-class PixelIncludeList extends _i1.IncludeList {
-  PixelIncludeList._({
-    _i1.WhereExpressionBuilder<PixelTable>? where,
+class BoardPixelIncludeList extends _i1.IncludeList {
+  BoardPixelIncludeList._({
+    _i1.WhereExpressionBuilder<BoardPixelTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -191,33 +191,33 @@ class PixelIncludeList extends _i1.IncludeList {
     super.orderByList,
     super.include,
   }) {
-    super.where = where?.call(Pixel.t);
+    super.where = where?.call(BoardPixel.t);
   }
 
   @override
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Pixel.t;
+  _i1.Table get table => BoardPixel.t;
 }
 
-class PixelRepository {
-  const PixelRepository._();
+class BoardPixelRepository {
+  const BoardPixelRepository._();
 
-  Future<List<Pixel>> find(
+  Future<List<BoardPixel>> find(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<PixelTable>? where,
+    _i1.WhereExpressionBuilder<BoardPixelTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<PixelTable>? orderBy,
+    _i1.OrderByBuilder<BoardPixelTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<PixelTable>? orderByList,
+    _i1.OrderByListBuilder<BoardPixelTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.find<Pixel>(
-      where: where?.call(Pixel.t),
-      orderBy: orderBy?.call(Pixel.t),
-      orderByList: orderByList?.call(Pixel.t),
+    return session.db.find<BoardPixel>(
+      where: where?.call(BoardPixel.t),
+      orderBy: orderBy?.call(BoardPixel.t),
+      orderByList: orderByList?.call(BoardPixel.t),
       orderDescending: orderDescending,
       limit: limit,
       offset: offset,
@@ -225,125 +225,125 @@ class PixelRepository {
     );
   }
 
-  Future<Pixel?> findFirstRow(
+  Future<BoardPixel?> findFirstRow(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<PixelTable>? where,
+    _i1.WhereExpressionBuilder<BoardPixelTable>? where,
     int? offset,
-    _i1.OrderByBuilder<PixelTable>? orderBy,
+    _i1.OrderByBuilder<BoardPixelTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<PixelTable>? orderByList,
+    _i1.OrderByListBuilder<BoardPixelTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findFirstRow<Pixel>(
-      where: where?.call(Pixel.t),
-      orderBy: orderBy?.call(Pixel.t),
-      orderByList: orderByList?.call(Pixel.t),
+    return session.db.findFirstRow<BoardPixel>(
+      where: where?.call(BoardPixel.t),
+      orderBy: orderBy?.call(BoardPixel.t),
+      orderByList: orderByList?.call(BoardPixel.t),
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction ?? session.transaction,
     );
   }
 
-  Future<Pixel?> findById(
+  Future<BoardPixel?> findById(
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findById<Pixel>(
+    return session.db.findById<BoardPixel>(
       id,
       transaction: transaction ?? session.transaction,
     );
   }
 
-  Future<List<Pixel>> insert(
+  Future<List<BoardPixel>> insert(
     _i1.Session session,
-    List<Pixel> rows, {
+    List<BoardPixel> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insert<Pixel>(
+    return session.db.insert<BoardPixel>(
       rows,
       transaction: transaction ?? session.transaction,
     );
   }
 
-  Future<Pixel> insertRow(
+  Future<BoardPixel> insertRow(
     _i1.Session session,
-    Pixel row, {
+    BoardPixel row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insertRow<Pixel>(
+    return session.db.insertRow<BoardPixel>(
       row,
       transaction: transaction ?? session.transaction,
     );
   }
 
-  Future<List<Pixel>> update(
+  Future<List<BoardPixel>> update(
     _i1.Session session,
-    List<Pixel> rows, {
-    _i1.ColumnSelections<PixelTable>? columns,
+    List<BoardPixel> rows, {
+    _i1.ColumnSelections<BoardPixelTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.update<Pixel>(
+    return session.db.update<BoardPixel>(
       rows,
-      columns: columns?.call(Pixel.t),
+      columns: columns?.call(BoardPixel.t),
       transaction: transaction ?? session.transaction,
     );
   }
 
-  Future<Pixel> updateRow(
+  Future<BoardPixel> updateRow(
     _i1.Session session,
-    Pixel row, {
-    _i1.ColumnSelections<PixelTable>? columns,
+    BoardPixel row, {
+    _i1.ColumnSelections<BoardPixelTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.updateRow<Pixel>(
+    return session.db.updateRow<BoardPixel>(
       row,
-      columns: columns?.call(Pixel.t),
+      columns: columns?.call(BoardPixel.t),
       transaction: transaction ?? session.transaction,
     );
   }
 
-  Future<List<Pixel>> delete(
+  Future<List<BoardPixel>> delete(
     _i1.Session session,
-    List<Pixel> rows, {
+    List<BoardPixel> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.delete<Pixel>(
+    return session.db.delete<BoardPixel>(
       rows,
       transaction: transaction ?? session.transaction,
     );
   }
 
-  Future<Pixel> deleteRow(
+  Future<BoardPixel> deleteRow(
     _i1.Session session,
-    Pixel row, {
+    BoardPixel row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteRow<Pixel>(
+    return session.db.deleteRow<BoardPixel>(
       row,
       transaction: transaction ?? session.transaction,
     );
   }
 
-  Future<List<Pixel>> deleteWhere(
+  Future<List<BoardPixel>> deleteWhere(
     _i1.Session session, {
-    required _i1.WhereExpressionBuilder<PixelTable> where,
+    required _i1.WhereExpressionBuilder<BoardPixelTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteWhere<Pixel>(
-      where: where(Pixel.t),
+    return session.db.deleteWhere<BoardPixel>(
+      where: where(BoardPixel.t),
       transaction: transaction ?? session.transaction,
     );
   }
 
   Future<int> count(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<PixelTable>? where,
+    _i1.WhereExpressionBuilder<BoardPixelTable>? where,
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.count<Pixel>(
-      where: where?.call(Pixel.t),
+    return session.db.count<BoardPixel>(
+      where: where?.call(BoardPixel.t),
       limit: limit,
       transaction: transaction ?? session.transaction,
     );

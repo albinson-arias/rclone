@@ -11,26 +11,26 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class Pixel implements _i1.SerializableModel {
-  Pixel._({
+abstract class BoardPixel implements _i1.SerializableModel {
+  BoardPixel._({
     this.id,
     required this.x,
     required this.y,
     required this.color,
   });
 
-  factory Pixel({
+  factory BoardPixel({
     int? id,
-    required int x,
-    required int y,
+    required double x,
+    required double y,
     required String color,
-  }) = _PixelImpl;
+  }) = _BoardPixelImpl;
 
-  factory Pixel.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Pixel(
+  factory BoardPixel.fromJson(Map<String, dynamic> jsonSerialization) {
+    return BoardPixel(
       id: jsonSerialization['id'] as int?,
-      x: jsonSerialization['x'] as int,
-      y: jsonSerialization['y'] as int,
+      x: (jsonSerialization['x'] as num).toDouble(),
+      y: (jsonSerialization['y'] as num).toDouble(),
       color: jsonSerialization['color'] as String,
     );
   }
@@ -40,16 +40,16 @@ abstract class Pixel implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int x;
+  double x;
 
-  int y;
+  double y;
 
   String color;
 
-  Pixel copyWith({
+  BoardPixel copyWith({
     int? id,
-    int? x,
-    int? y,
+    double? x,
+    double? y,
     String? color,
   });
   @override
@@ -70,11 +70,11 @@ abstract class Pixel implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _PixelImpl extends Pixel {
-  _PixelImpl({
+class _BoardPixelImpl extends BoardPixel {
+  _BoardPixelImpl({
     int? id,
-    required int x,
-    required int y,
+    required double x,
+    required double y,
     required String color,
   }) : super._(
           id: id,
@@ -84,13 +84,13 @@ class _PixelImpl extends Pixel {
         );
 
   @override
-  Pixel copyWith({
+  BoardPixel copyWith({
     Object? id = _Undefined,
-    int? x,
-    int? y,
+    double? x,
+    double? y,
     String? color,
   }) {
-    return Pixel(
+    return BoardPixel(
       id: id is int? ? id : this.id,
       x: x ?? this.x,
       y: y ?? this.y,

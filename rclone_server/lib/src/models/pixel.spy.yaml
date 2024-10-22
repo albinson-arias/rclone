@@ -1,6 +1,0 @@
-class: Pixel
-table: pixels
-fields:
-    x: int
-    y: int
-    color: String

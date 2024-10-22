@@ -1,0 +1,6 @@
+class: BoardPixel
+table: board_pixels
+fields:
+    x: double
+    y: double
+    color: String
