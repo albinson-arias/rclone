@@ -10,19 +10,63 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import '../endpoints/example_endpoint.dart' as _i2;
+import '../endpoints/board_endpoint.dart' as _i2;
+import '../endpoints/example_endpoint.dart' as _i3;
+import 'package:rclone_server/src/generated/pixel.dart' as _i4;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
   void initializeEndpoints(_i1.Server server) {
     var endpoints = <String, _i1.Endpoint>{
-      'example': _i2.ExampleEndpoint()
+      'board': _i2.BoardEndpoint()
+        ..initialize(
+          server,
+          'board',
+          null,
+        ),
+      'example': _i3.ExampleEndpoint()
         ..initialize(
           server,
           'example',
           null,
-        )
+        ),
     };
+    connectors['board'] = _i1.EndpointConnector(
+      name: 'board',
+      endpoint: endpoints['board']!,
+      methodConnectors: {
+        'writePixel': _i1.MethodConnector(
+          name: 'writePixel',
+          params: {
+            'pixel': _i1.ParameterDescription(
+              name: 'pixel',
+              type: _i1.getType<_i4.Pixel>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['board'] as _i2.BoardEndpoint).writePixel(
+            session,
+            params['pixel'],
+          ),
+        ),
+        'listenToBoard': _i1.MethodStreamConnector(
+          name: 'listenToBoard',
+          params: {},
+          streamParams: {},
+          returnType: _i1.MethodStreamReturnType.streamType,
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+            Map<String, Stream> streamParams,
+          ) =>
+              (endpoints['board'] as _i2.BoardEndpoint).listenToBoard(session),
+        ),
+      },
+    );
     connectors['example'] = _i1.EndpointConnector(
       name: 'example',
       endpoint: endpoints['example']!,
@@ -40,7 +84,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['example'] as _i2.ExampleEndpoint).hello(
+              (endpoints['example'] as _i3.ExampleEndpoint).hello(
             session,
             params['name'],
           ),

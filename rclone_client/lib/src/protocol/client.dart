@@ -11,7 +11,34 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'protocol.dart' as _i3;
+import 'package:rclone_client/src/protocol/pixel.dart' as _i3;
+import 'protocol.dart' as _i4;
+
+/// {@category Endpoint}
+class EndpointBoard extends _i1.EndpointRef {
+  EndpointBoard(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'board';
+
+  _i2.Future<void> writePixel(_i3.Pixel pixel) =>
+      caller.callServerEndpoint<void>(
+        'board',
+        'writePixel',
+        {'pixel': pixel},
+      );
+
+  /// Returns a stream of pixels. The first message will contain
+  /// the full board. Sequential updates will contain a single updated pixel.
+  _i2.Stream<List<_i3.Pixel>> listenToBoard() =>
+      caller.callStreamingServerEndpoint<_i2.Stream<List<_i3.Pixel>>,
+          List<_i3.Pixel>>(
+        'board',
+        'listenToBoard',
+        {},
+        {},
+      );
+}
 
 /// {@category Endpoint}
 class EndpointExample extends _i1.EndpointRef {
@@ -43,7 +70,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i3.Protocol(),
+          _i4.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -53,13 +80,19 @@ class Client extends _i1.ServerpodClientShared {
           disconnectStreamsOnLostInternetConnection:
               disconnectStreamsOnLostInternetConnection,
         ) {
+    board = EndpointBoard(this);
     example = EndpointExample(this);
   }
+
+  late final EndpointBoard board;
 
   late final EndpointExample example;
 
   @override
-  Map<String, _i1.EndpointRef> get endpointRefLookup => {'example': example};
+  Map<String, _i1.EndpointRef> get endpointRefLookup => {
+        'board': board,
+        'example': example,
+      };
 
   @override
   Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {};
