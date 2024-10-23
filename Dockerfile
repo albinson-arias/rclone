@@ -23,7 +23,7 @@ RUN flutter doctor -v
 RUN mkdir $APP
 WORKDIR $APP
 
-# Copy only the rclone_flutter and rclone_client directories into the Docker image, excluding rclone_server
+# Copy rclone_flutter and rclone_client folders into the Docker image
 COPY rclone_flutter ./rclone_flutter
 COPY rclone_client ./rclone_client
 
