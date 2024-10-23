@@ -28,8 +28,9 @@ class MyApp extends StatelessWidget {
       title: 'Rclone Serverpod Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(backgroundColor: Colors.white)),
       home: MultiBlocProvider(
         providers: [
           BlocProvider(

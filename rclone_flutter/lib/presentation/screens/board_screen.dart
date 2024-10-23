@@ -11,19 +11,20 @@ class BoardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        actions: [
-          ColorPicker(),
-        ],
-      ),
-      body: BlocBuilder<PixelsCubit, PixelsState>(
-        builder: (context, state) {
-          return switch (state) {
-            PixelsLoading() =>
-              const Center(child: CircularProgressIndicator.adaptive()),
-            (final PixelsLoaded state) => Center(
+    return BlocBuilder<PixelsCubit, PixelsState>(
+      builder: (context, state) {
+        return switch (state) {
+          PixelsLoading() => Scaffold(
+              body: const Center(child: CircularProgressIndicator.adaptive()),
+            ),
+          (final PixelsLoaded state) => Scaffold(
+              backgroundColor: Colors.white,
+              appBar: AppBar(
+                actions: [
+                  ColorPicker(),
+                ],
+              ),
+              body: Center(
                 child: InteractiveViewer(
                   constrained: false,
                   minScale: 0.2,
@@ -55,9 +56,9 @@ class BoardScreen extends StatelessWidget {
                   ),
                 ),
               ),
-          };
-        },
-      ),
+            )
+        };
+      },
     );
   }
 }
