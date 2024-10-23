@@ -47,4 +47,4 @@ EXPOSE 8080
 EXPOSE 8081
 EXPOSE 8082
 #CMD ["/app/bin/server"]
-CMD /bin/bash -c "dart bin/main.dart --mode production"
+CMD /bin/bash -c "dart bin/main.dart --mode production --apply-migrations"
