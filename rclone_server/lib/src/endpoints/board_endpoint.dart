@@ -7,18 +7,14 @@ class BoardEndpoint extends Endpoint {
   Future<void> writePixel(Session session, BoardPixel pixel) async {
     await session.db.transaction(
       (transaction) async {
-        final count = await BoardPixel.db.count(session,
-            limit: 1,
+        await BoardPixel.db.deleteWhere(session,
             where: (t) => (t.x.equals(pixel.x) & t.y.equals(pixel.y)),
             transaction: transaction);
 
-        if (count != 0) {
-          await BoardPixel.db.deleteWhere(session,
-              where: (t) => (t.x.equals(pixel.x) & t.y.equals(pixel.y)),
-              transaction: transaction);
-        }
+        if (pixel.color == 'FFFFFFFF') return;
 
         await BoardPixel.db.insertRow(session, pixel, transaction: transaction);
+
         session.messages.postMessage(
           _channelBoardPixelAdded,
           pixel,
