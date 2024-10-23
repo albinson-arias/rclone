@@ -11,7 +11,7 @@ class BoardEndpoint extends Endpoint {
             where: (t) => (t.x.equals(pixel.x) & t.y.equals(pixel.y)),
             transaction: transaction);
 
-        if (pixel.color == 'FFFFFFFF') return;
+        // if (pixel.color == 'FFFFFFFF') return;
 
         await BoardPixel.db.insertRow(session, pixel, transaction: transaction);
 

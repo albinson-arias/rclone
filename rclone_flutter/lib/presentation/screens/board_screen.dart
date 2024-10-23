@@ -23,31 +23,33 @@ class BoardScreen extends StatelessWidget {
           return switch (state) {
             PixelsLoading() =>
               const Center(child: CircularProgressIndicator.adaptive()),
-            (final PixelsLoaded state) => InteractiveViewer(
-                constrained: false,
-                minScale: 0.2,
-                maxScale: 15,
-                child: SizedBox(
-                  width: 1920,
-                  height: 1080,
-                  child: Listener(
-                    onPointerDown: (event) {
-                      if (HardwareKeyboard
-                          .instance.physicalKeysPressed.isEmpty) {
-                        final color = context.read<ColorCubit>().state;
-                        context.read<PixelsCubit>().writePixel(
-                              event.localPosition,
-                              color,
-                            );
-                      }
-                    },
-                    onPointerMove: (event) {
-                      context.read<PixelsCubit>().cancelPendingWrite();
-                    },
-                    child: CustomPaint(
-                      size: const Size(1920, 1080),
-                      painter: BoardPainter(
-                        pixels: state.pixels,
+            (final PixelsLoaded state) => Center(
+                child: InteractiveViewer(
+                  constrained: false,
+                  minScale: 0.2,
+                  maxScale: 15,
+                  child: SizedBox(
+                    width: 1920,
+                    height: 1080,
+                    child: Listener(
+                      onPointerDown: (event) {
+                        if (HardwareKeyboard
+                            .instance.physicalKeysPressed.isEmpty) {
+                          final color = context.read<ColorCubit>().state;
+                          context.read<PixelsCubit>().writePixel(
+                                event.localPosition,
+                                color,
+                              );
+                        }
+                      },
+                      onPointerMove: (event) {
+                        context.read<PixelsCubit>().cancelPendingWrite();
+                      },
+                      child: CustomPaint(
+                        size: const Size(1920, 1080),
+                        painter: BoardPainter(
+                          pixels: state.pixels,
+                        ),
                       ),
                     ),
                   ),

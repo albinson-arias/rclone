@@ -12,6 +12,7 @@ import 'package:serverpod_flutter/serverpod_flutter.dart';
 // the default port. You will need to modify this to connect to staging or
 // production servers.
 var client = Client('https://rcloneapi.albinson-apps.com/')
+// var client = Client('http://$localhost:8080/')
   ..connectivityMonitor = FlutterConnectivityMonitor();
 
 void main() {
