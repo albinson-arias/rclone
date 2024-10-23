@@ -41,6 +41,9 @@ class BoardScreen extends StatelessWidget {
                             );
                       }
                     },
+                    onPointerMove: (event) {
+                      context.read<PixelsCubit>().cancelPendingWrite();
+                    },
                     child: CustomPaint(
                       size: const Size(1920, 1080),
                       painter: BoardPainter(

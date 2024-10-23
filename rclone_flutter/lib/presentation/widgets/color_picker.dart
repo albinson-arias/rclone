@@ -20,6 +20,7 @@ class ColorPicker extends StatelessWidget {
     Colors.lightGreen,
     Colors.lime,
     Colors.yellow,
+    Color(0xFFFFD9C2),
     Colors.amber,
     Colors.orange,
     Colors.deepOrange,

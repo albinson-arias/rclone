@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
@@ -18,6 +19,7 @@ class PixelsCubit extends Cubit<PixelsState> {
   }
 
   final Client _client;
+  Timer? writeTimer;
 
   Future<void> loadPixels() async {
     while (true) {
@@ -49,13 +51,28 @@ class PixelsCubit extends Cubit<PixelsState> {
   }
 
   void writePixel(Offset offset, Color color) {
+    // writeTimer = Timer(
+    //   Duration(milliseconds: 50),
+    //   () {
     if (state is! PixelsLoaded) return;
+    final actualState = state as PixelsLoaded;
     final pixel = BoardPixel(
       x: offset.round().dx,
       y: offset.round().dy,
       color: colorToHex(color),
     );
+    final pixels = [...actualState.pixels]..removeWhere(
+        (element) => element.x == pixel.x && element.y == pixel.y,
+      );
+
+    emit(PixelsLoaded(pixels: pixels));
 
     _client.board.writePixel(pixel);
+    // },
+    // );
+  }
+
+  void cancelPendingWrite() {
+    // writeTimer?.cancel();
   }
 }
