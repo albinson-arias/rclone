@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rclone_flutter/presentation/cubits/color_cubit/color_cubit.dart';
 import 'package:rclone_flutter/presentation/cubits/pixels_cubit/pixels_cubit.dart';
+import 'package:rclone_flutter/presentation/screens/select_username_screen.dart';
 import 'package:rclone_flutter/presentation/widgets/board_painter.dart';
 import 'package:rclone_flutter/presentation/widgets/color_picker.dart';
 
@@ -34,8 +35,10 @@ class BoardScreen extends StatelessWidget {
                     height: 1080,
                     child: Listener(
                       onPointerDown: (event) {
-                        if (HardwareKeyboard
-                            .instance.physicalKeysPressed.isEmpty) {
+                        if (Theme.of(context).platform ==
+                                TargetPlatform.android ||
+                            HardwareKeyboard
+                                .instance.physicalKeysPressed.isEmpty) {
                           final color = context.read<ColorCubit>().state;
                           context.read<PixelsCubit>().writePixel(
                                 event.localPosition,
@@ -56,7 +59,8 @@ class BoardScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
+          PixelsInitial() => SelectUsernameScreen(),
         };
       },
     );

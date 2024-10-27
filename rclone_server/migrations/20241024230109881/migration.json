@@ -1,0 +1,42 @@
+{
+  "actions": [
+    {
+      "type": "alterTable",
+      "alterTable": {
+        "name": "board_pixels",
+        "schema": "public",
+        "addColumns": [
+          {
+            "name": "username",
+            "columnType": 0,
+            "isNullable": false,
+            "columnDefault": "''::text",
+            "dartType": "String"
+          }
+        ],
+        "deleteColumns": [],
+        "modifyColumns": [],
+        "addIndexes": [
+          {
+            "indexName": "pixel_user",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "username"
+              }
+            ],
+            "type": "btree",
+            "isUnique": false,
+            "isPrimary": false
+          }
+        ],
+        "deleteIndexes": [],
+        "addForeignKeys": [],
+        "deleteForeignKeys": [],
+        "warnings": []
+      }
+    }
+  ],
+  "warnings": [],
+  "migrationApiVersion": 1
+}

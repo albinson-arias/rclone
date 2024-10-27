@@ -38,19 +38,23 @@ class EndpointBoard extends _i1.EndpointRef {
         {},
         {},
       );
-}
 
-/// {@category Endpoint}
-class EndpointExample extends _i1.EndpointRef {
-  EndpointExample(_i1.EndpointCaller caller) : super(caller);
+  /// Returns a stream of pixels added by given user.
+  /// The first message will contain the full board.
+  /// Sequential updates will contain a single updated pixel.
+  _i2.Stream<_i4.Board> listenToUserBoard(String username) =>
+      caller.callStreamingServerEndpoint<_i2.Stream<_i4.Board>, _i4.Board>(
+        'board',
+        'listenToUserBoard',
+        {'username': username},
+        {},
+      );
 
-  @override
-  String get name => 'example';
-
-  _i2.Future<String> hello(String name) => caller.callServerEndpoint<String>(
-        'example',
-        'hello',
-        {'name': name},
+  _i2.Future<List<String>> getUsers() =>
+      caller.callServerEndpoint<List<String>>(
+        'board',
+        'getUsers',
+        {},
       );
 }
 
@@ -81,18 +85,12 @@ class Client extends _i1.ServerpodClientShared {
               disconnectStreamsOnLostInternetConnection,
         ) {
     board = EndpointBoard(this);
-    example = EndpointExample(this);
   }
 
   late final EndpointBoard board;
 
-  late final EndpointExample example;
-
   @override
-  Map<String, _i1.EndpointRef> get endpointRefLookup => {
-        'board': board,
-        'example': example,
-      };
+  Map<String, _i1.EndpointRef> get endpointRefLookup => {'board': board};
 
   @override
   Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {};
