@@ -16,9 +16,11 @@ class Assets {
   Assets._();
 
   static const SvgGenImage logo = SvgGenImage('assets/logo.svg');
+  static const SvgGenImage usernameScreenBackground =
+      SvgGenImage('assets/username-screen-background.svg');
 
   /// List of all assets
-  static List<SvgGenImage> get values => [logo];
+  static List<SvgGenImage> get values => [logo, usernameScreenBackground];
 }
 
 class SvgGenImage {
