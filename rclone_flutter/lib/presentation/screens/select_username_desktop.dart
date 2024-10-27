@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:rclone_flutter/core/utils/assets/gen/assets.gen.dart';
+import 'package:rclone_flutter/core/utils/assets/gen/fonts.gen.dart';
 import 'package:rclone_flutter/presentation/widgets/bplace_text_logo.dart';
 
 class SelectUsernameDesktop extends StatelessWidget {
@@ -21,7 +20,7 @@ class SelectUsernameDesktop extends StatelessWidget {
       height: double.infinity,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: Svg(Assets.usernameScreenBackground.path),
+          image: AssetImage(Assets.usernameScreenBackground.path),
           fit: BoxFit.cover,
         ),
       ),
@@ -59,7 +58,8 @@ class SelectUsernameDesktop extends StatelessWidget {
                   Center(
                     child: Text(
                       'Bienvenido',
-                      style: GoogleFonts.silkscreen(
+                      style: TextStyle(
+                        fontFamily: FontFamily.silkscreen,
                         color: Colors.white,
                         fontSize: 20,
                       ),
@@ -68,7 +68,8 @@ class SelectUsernameDesktop extends StatelessWidget {
                   SizedBox(height: 16),
                   Text(
                     'Nombre de usuario',
-                    style: GoogleFonts.silkscreen(
+                    style: TextStyle(
+                      fontFamily: FontFamily.silkscreen,
                       color: Color(0xFFb3b8bf),
                       fontSize: 12,
                     ),
@@ -87,14 +88,16 @@ class SelectUsernameDesktop extends StatelessWidget {
                       submit();
                     },
                     cursorColor: Colors.blue.shade300,
-                    style: GoogleFonts.silkscreen(
+                    style: TextStyle(
+                      fontFamily: FontFamily.silkscreen,
                       color: Colors.white,
                     ),
                     decoration: InputDecoration(
                       fillColor: Color(0xFF1e1f22),
                       filled: true,
                       border: InputBorder.none,
-                      errorStyle: GoogleFonts.silkscreen(
+                      errorStyle: TextStyle(
+                        fontFamily: FontFamily.silkscreen,
                         color: Colors.red,
                       ),
                     ),
@@ -112,7 +115,8 @@ class SelectUsernameDesktop extends StatelessWidget {
                       ),
                       child: Text(
                         'Ingresar',
-                        style: GoogleFonts.silkscreen(
+                        style: TextStyle(
+                          fontFamily: FontFamily.silkscreen,
                           color: Colors.white,
                           fontSize: 14,
                         ),

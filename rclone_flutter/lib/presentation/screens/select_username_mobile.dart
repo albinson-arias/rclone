@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:rclone_flutter/core/utils/assets/gen/fonts.gen.dart';
 import 'package:rclone_flutter/presentation/widgets/bplace_text_logo.dart';
 
 class SelectUsernameMobile extends StatelessWidget {
@@ -26,7 +26,8 @@ class SelectUsernameMobile extends StatelessWidget {
           SizedBox(height: 12),
           Text(
             'Nombre de usuario',
-            style: GoogleFonts.silkscreen(
+            style: TextStyle(
+              fontFamily: FontFamily.silkscreen,
               color: Color(0xFFb3b8bf),
               fontSize: 12,
             ),
@@ -45,14 +46,16 @@ class SelectUsernameMobile extends StatelessWidget {
               submit();
             },
             cursorColor: Colors.blue.shade300,
-            style: GoogleFonts.silkscreen(
+            style: TextStyle(
+              fontFamily: FontFamily.silkscreen,
               color: Colors.white,
             ),
             decoration: InputDecoration(
               fillColor: Color(0xFF1e1f22),
               filled: true,
               border: InputBorder.none,
-              errorStyle: GoogleFonts.silkscreen(
+              errorStyle: TextStyle(
+                fontFamily: FontFamily.silkscreen,
                 color: Colors.red,
               ),
             ),
@@ -70,7 +73,8 @@ class SelectUsernameMobile extends StatelessWidget {
               ),
               child: Text(
                 'Ingresar',
-                style: GoogleFonts.silkscreen(
+                style: TextStyle(
+                  fontFamily: FontFamily.silkscreen,
                   color: Colors.white,
                   fontSize: 14,
                 ),
