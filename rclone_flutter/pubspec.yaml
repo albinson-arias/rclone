@@ -1,5 +1,5 @@
 name: rclone_flutter
-description: A new Flutter project with Serverpod.
+description: BPlace
 publish_to: 'none' 
 version: 1.0.0+1
 
@@ -29,6 +29,7 @@ dev_dependencies:
   flutter_lints: '>=3.0.0 <6.0.0'
   flutter_test:
     sdk: flutter
+  rename_app: ^1.6.1
 
 flutter_gen:
   output: lib/core/utils/assets/gen/
