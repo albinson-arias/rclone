@@ -11,8 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/board_endpoint.dart' as _i2;
-import '../endpoints/example_endpoint.dart' as _i3;
-import 'package:rclone_server/src/generated/board_pixel.dart' as _i4;
+import 'package:rclone_server/src/generated/board_pixel.dart' as _i3;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -23,13 +22,7 @@ class Endpoints extends _i1.EndpointDispatch {
           server,
           'board',
           null,
-        ),
-      'example': _i3.ExampleEndpoint()
-        ..initialize(
-          server,
-          'example',
-          null,
-        ),
+        )
     };
     connectors['board'] = _i1.EndpointConnector(
       name: 'board',
@@ -40,7 +33,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'pixel': _i1.ParameterDescription(
               name: 'pixel',
-              type: _i1.getType<_i4.BoardPixel>(),
+              type: _i1.getType<_i3.BoardPixel>(),
               nullable: false,
             )
           },
@@ -52,6 +45,15 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['pixel'],
           ),
+        ),
+        'getUsers': _i1.MethodConnector(
+          name: 'getUsers',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['board'] as _i2.BoardEndpoint).getUsers(session),
         ),
         'listenToBoard': _i1.MethodStreamConnector(
           name: 'listenToBoard',
@@ -65,30 +67,27 @@ class Endpoints extends _i1.EndpointDispatch {
           ) =>
               (endpoints['board'] as _i2.BoardEndpoint).listenToBoard(session),
         ),
-      },
-    );
-    connectors['example'] = _i1.EndpointConnector(
-      name: 'example',
-      endpoint: endpoints['example']!,
-      methodConnectors: {
-        'hello': _i1.MethodConnector(
-          name: 'hello',
+        'listenToUserBoard': _i1.MethodStreamConnector(
+          name: 'listenToUserBoard',
           params: {
-            'name': _i1.ParameterDescription(
-              name: 'name',
+            'username': _i1.ParameterDescription(
+              name: 'username',
               type: _i1.getType<String>(),
               nullable: false,
             )
           },
+          streamParams: {},
+          returnType: _i1.MethodStreamReturnType.streamType,
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
-          ) async =>
-              (endpoints['example'] as _i3.ExampleEndpoint).hello(
+            Map<String, Stream> streamParams,
+          ) =>
+              (endpoints['board'] as _i2.BoardEndpoint).listenToUserBoard(
             session,
-            params['name'],
+            params['username'],
           ),
-        )
+        ),
       },
     );
   }

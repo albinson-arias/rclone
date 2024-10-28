@@ -7,6 +7,10 @@ sealed class PixelsState extends Equatable {
   List<Object?> get props => [];
 }
 
+final class PixelsInitial extends PixelsState {
+  const PixelsInitial();
+}
+
 final class PixelsLoading extends PixelsState {
   const PixelsLoading();
 }

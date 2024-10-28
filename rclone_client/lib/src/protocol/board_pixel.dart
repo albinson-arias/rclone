@@ -17,13 +17,15 @@ abstract class BoardPixel implements _i1.SerializableModel {
     required this.x,
     required this.y,
     required this.color,
-  });
+    String? username,
+  }) : username = username ?? '';
 
   factory BoardPixel({
     int? id,
     required double x,
     required double y,
     required String color,
+    String? username,
   }) = _BoardPixelImpl;
 
   factory BoardPixel.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -32,6 +34,7 @@ abstract class BoardPixel implements _i1.SerializableModel {
       x: (jsonSerialization['x'] as num).toDouble(),
       y: (jsonSerialization['y'] as num).toDouble(),
       color: jsonSerialization['color'] as String,
+      username: jsonSerialization['username'] as String,
     );
   }
 
@@ -46,11 +49,14 @@ abstract class BoardPixel implements _i1.SerializableModel {
 
   String color;
 
+  String username;
+
   BoardPixel copyWith({
     int? id,
     double? x,
     double? y,
     String? color,
+    String? username,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -59,6 +65,7 @@ abstract class BoardPixel implements _i1.SerializableModel {
       'x': x,
       'y': y,
       'color': color,
+      'username': username,
     };
   }
 
@@ -76,11 +83,13 @@ class _BoardPixelImpl extends BoardPixel {
     required double x,
     required double y,
     required String color,
+    String? username,
   }) : super._(
           id: id,
           x: x,
           y: y,
           color: color,
+          username: username,
         );
 
   @override
@@ -89,12 +98,14 @@ class _BoardPixelImpl extends BoardPixel {
     double? x,
     double? y,
     String? color,
+    String? username,
   }) {
     return BoardPixel(
       id: id is int? ? id : this.id,
       x: x ?? this.x,
       y: y ?? this.y,
       color: color ?? this.color,
+      username: username ?? this.username,
     );
   }
 }

@@ -10,18 +10,15 @@ import 'package:rclone_flutter/core/extensions/offset_extension.dart';
 part 'pixels_state.dart';
 
 class PixelsCubit extends Cubit<PixelsState> {
-  PixelsCubit(this._client) : super(const PixelsLoading()) {
-    Future<void>.delayed(const Duration(milliseconds: 500)).then(
-      (value) {
-        loadPixels();
-      },
-    );
-  }
+  PixelsCubit(this._client) : super(const PixelsInitial());
 
   final Client _client;
   Timer? writeTimer;
+  String username = '';
 
-  Future<void> loadPixels() async {
+  Future<void> loadPixels(String user) async {
+    username = user;
+    emit(PixelsLoading());
     while (true) {
       try {
         // Get the stream of updates from the server.
@@ -40,7 +37,7 @@ class PixelsCubit extends Cubit<PixelsState> {
                 PixelsLoaded(pixels: [...actualState.pixels, ...board.pixels]));
           }
         }
-      } on MethodStreamException catch (_) {
+      } catch (_) {
         // We lost the connection to the server, or failed to connect.
         emit(PixelsLoading());
       }
@@ -60,6 +57,7 @@ class PixelsCubit extends Cubit<PixelsState> {
       x: offset.round().dx,
       y: offset.round().dy,
       color: colorToHex(color),
+      username: username,
     );
     final pixels = [...actualState.pixels]..removeWhere(
         (element) => element.x == pixel.x && element.y == pixel.y,

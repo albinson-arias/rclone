@@ -4,3 +4,7 @@ fields:
     x: double
     y: double
     color: String
+    username: String, default=''
+indexes:
+    pixel_user:
+        fields: username

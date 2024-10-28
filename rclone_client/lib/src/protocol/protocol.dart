@@ -13,11 +13,9 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'board.dart' as _i2;
 import 'board_pixel.dart' as _i3;
-import 'example.dart' as _i4;
-import 'protocol.dart' as _i5;
+import 'protocol.dart' as _i4;
 export 'board.dart';
 export 'board_pixel.dart';
-export 'example.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -39,20 +37,18 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i3.BoardPixel) {
       return _i3.BoardPixel.fromJson(data) as T;
     }
-    if (t == _i4.Example) {
-      return _i4.Example.fromJson(data) as T;
-    }
     if (t == _i1.getType<_i2.Board?>()) {
       return (data != null ? _i2.Board.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i3.BoardPixel?>()) {
       return (data != null ? _i3.BoardPixel.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i4.Example?>()) {
-      return (data != null ? _i4.Example.fromJson(data) : null) as T;
+    if (t == List<_i4.BoardPixel>) {
+      return (data as List).map((e) => deserialize<_i4.BoardPixel>(e)).toList()
+          as dynamic;
     }
-    if (t == List<_i5.BoardPixel>) {
-      return (data as List).map((e) => deserialize<_i5.BoardPixel>(e)).toList()
+    if (t == List<String>) {
+      return (data as List).map((e) => deserialize<String>(e)).toList()
           as dynamic;
     }
     return super.deserialize<T>(data, t);
@@ -68,9 +64,6 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i3.BoardPixel) {
       return 'BoardPixel';
     }
-    if (data is _i4.Example) {
-      return 'Example';
-    }
     return null;
   }
 
@@ -81,9 +74,6 @@ class Protocol extends _i1.SerializationManager {
     }
     if (data['className'] == 'BoardPixel') {
       return deserialize<_i3.BoardPixel>(data['data']);
-    }
-    if (data['className'] == 'Example') {
-      return deserialize<_i4.Example>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
