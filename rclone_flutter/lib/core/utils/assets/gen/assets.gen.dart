@@ -15,12 +15,15 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class Assets {
   Assets._();
 
+  static const AssetGenImage bplaceLogo =
+      AssetGenImage('assets/bplace_logo.png');
   static const SvgGenImage logo = SvgGenImage('assets/logo.svg');
   static const AssetGenImage usernameScreenBackground =
       AssetGenImage('assets/username-screen-background.png');
 
   /// List of all assets
-  static List<dynamic> get values => [logo, usernameScreenBackground];
+  static List<dynamic> get values =>
+      [bplaceLogo, logo, usernameScreenBackground];
 }
 
 class AssetGenImage {

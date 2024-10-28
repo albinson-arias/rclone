@@ -34,8 +34,8 @@ class _SplashScreenState extends State<SplashScreen> {
         tag: 'BplaceTextLogo',
         child: Center(
           child: Assets.logo.svg(
-            width: 100,
-            height: 100,
+            width: 125,
+            height: 125,
           ),
         ),
       ),
