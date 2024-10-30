@@ -10,6 +10,10 @@ import 'package:rclone_flutter/presentation/widgets/color_picker.dart';
 class BoardScreen extends StatelessWidget {
   const BoardScreen({super.key});
 
+  bool isMobile(BuildContext context) =>
+      Theme.of(context).platform == TargetPlatform.android ||
+      Theme.of(context).platform == TargetPlatform.iOS;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PixelsCubit, PixelsState>(
@@ -19,8 +23,9 @@ class BoardScreen extends StatelessWidget {
               body: const Center(child: CircularProgressIndicator.adaptive()),
             ),
           (final PixelsLoaded state) => Scaffold(
-              backgroundColor: Colors.white,
+              backgroundColor: Color(0xFF313338),
               appBar: AppBar(
+                backgroundColor: Color(0xFF313338),
                 actions: [
                   ColorPicker(),
                 ],
@@ -30,13 +35,26 @@ class BoardScreen extends StatelessWidget {
                   constrained: false,
                   minScale: 0.2,
                   maxScale: 15,
-                  child: SizedBox(
+                  boundaryMargin: EdgeInsets.all(double.infinity),
+                  transformationController:
+                      context.read<PixelsCubit>().viewTransformationController,
+                  child: Container(
                     width: 1920,
                     height: 1080,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 7,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
                     child: Listener(
                       onPointerDown: (event) {
-                        if (Theme.of(context).platform ==
-                                TargetPlatform.android ||
+                        if (isMobile(context) ||
                             HardwareKeyboard
                                 .instance.physicalKeysPressed.isEmpty) {
                           final color = context.read<ColorCubit>().state;
@@ -58,8 +76,7 @@ class BoardScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-            ),
+              )),
           PixelsInitial() => SelectUsernameScreen(),
         };
       },

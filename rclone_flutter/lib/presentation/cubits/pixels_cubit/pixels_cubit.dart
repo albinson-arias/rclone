@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:rclone_client/rclone_client.dart';
@@ -10,14 +11,30 @@ import 'package:rclone_flutter/core/extensions/offset_extension.dart';
 part 'pixels_state.dart';
 
 class PixelsCubit extends Cubit<PixelsState> {
-  PixelsCubit(this._client) : super(const PixelsInitial());
+  PixelsCubit(this._client) : super(const PixelsInitial()) {
+    setInitialBoardZoom();
+  }
 
   final Client _client;
   Timer? writeTimer;
   String username = '';
+  final viewTransformationController = TransformationController();
+
+  @override
+  Future<void> close() async {
+    viewTransformationController.dispose();
+    super.close();
+  }
+
+  void setInitialBoardZoom() {
+    final zoomFactor = kIsWeb ? 0.5 : 0.2;
+    viewTransformationController.value.setEntry(0, 0, zoomFactor);
+    viewTransformationController.value.setEntry(1, 1, zoomFactor);
+    viewTransformationController.value.setEntry(2, 2, zoomFactor);
+  }
 
   Future<void> loadPixels(String user) async {
-    username = user;
+    username = user.toLowerCase();
     emit(PixelsLoading());
     while (true) {
       try {
