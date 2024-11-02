@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rclone_flutter/core/routing/app_routes.dart';
@@ -27,16 +28,19 @@ final goRouter = GoRouter(
     GoRoute(
       path: '/',
       name: AppRoutes.board.name,
-      builder: (context, state) => MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (_) => PixelsCubit(client),
-          ),
-          BlocProvider(
-            create: (context) => ColorCubit(),
-          ),
-        ],
-        child: const BoardScreen(),
+      // builder: (context, state) => MultiBlocProvider(
+      //   providers: [
+      //     BlocProvider(
+      //       create: (_) => PixelsCubit(client),
+      //     ),
+      //     BlocProvider(
+      //       create: (context) => ColorCubit(),
+      //     ),
+      //   ],
+      //   child: const BoardScreen(),
+      // ),
+      builder: (context, state) => Scaffold(
+        backgroundColor: Colors.red,
       ),
     ),
     GoRoute(
