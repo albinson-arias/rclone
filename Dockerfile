@@ -38,6 +38,9 @@ RUN flutter build web
 # Stage 2: Serve the web app using Nginx
 FROM nginx:1.25.2-alpine
 
+# Copy the custom Nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Copy the built web app to Nginx's HTML directory
 COPY --from=build-env /app/rclone_flutter/build/web /usr/share/nginx/html
 

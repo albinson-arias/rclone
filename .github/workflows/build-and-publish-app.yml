@@ -1,9 +1,10 @@
-name: Create and publish a Docker image
+name: Create and publish App Image
 
 on:
   push:
     branches: ['main']
     paths:
+      - 'Dockerfile'  
       - 'rclone_flutter/**'
       - 'rclone_client/**'
 
