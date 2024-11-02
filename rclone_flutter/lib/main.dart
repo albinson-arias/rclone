@@ -3,6 +3,7 @@ import 'package:rclone_client/rclone_client.dart';
 import 'package:flutter/material.dart';
 import 'package:rclone_flutter/core/routing/app_router.dart';
 import 'package:rclone_flutter/core/utils/assets/gen/assets.gen.dart';
+import 'package:rclone_flutter/core/utils/assets/gen/fonts.gen.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
@@ -40,9 +41,13 @@ class MyApp extends StatelessWidget {
       title: 'BPlace',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(backgroundColor: Colors.white),
+        fontFamily: FontFamily.silkscreen,
+        scaffoldBackgroundColor: Color(0xFF313338),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFF313338),
+        ),
         colorSchemeSeed: Colors.blue.shade300,
+        brightness: Brightness.dark,
       ),
     );
   }

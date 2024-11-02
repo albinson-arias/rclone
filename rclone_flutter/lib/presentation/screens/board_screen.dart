@@ -3,12 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rclone_flutter/presentation/cubits/color_cubit/color_cubit.dart';
 import 'package:rclone_flutter/presentation/cubits/pixels_cubit/pixels_cubit.dart';
+import 'package:rclone_flutter/presentation/screens/loading_screen.dart';
 import 'package:rclone_flutter/presentation/screens/select_username_screen.dart';
 import 'package:rclone_flutter/presentation/widgets/board_painter.dart';
 import 'package:rclone_flutter/presentation/widgets/color_picker.dart';
 
 class BoardScreen extends StatelessWidget {
-  const BoardScreen({super.key});
+  const BoardScreen({
+    super.key,
+    this.userWatching = false,
+  });
+
+  final bool userWatching;
 
   bool isMobile(BuildContext context) =>
       Theme.of(context).platform == TargetPlatform.android ||
@@ -19,17 +25,19 @@ class BoardScreen extends StatelessWidget {
     return BlocBuilder<PixelsCubit, PixelsState>(
       builder: (context, state) {
         return switch (state) {
-          PixelsLoading() => Scaffold(
-              body: const Center(child: CircularProgressIndicator.adaptive()),
-            ),
+          PixelsLoading() => LoadingScreen(),
           (final PixelsLoaded state) => Scaffold(
               backgroundColor: Color(0xFF313338),
-              appBar: AppBar(
-                backgroundColor: Color(0xFF313338),
-                actions: [
-                  ColorPicker(),
-                ],
-              ),
+              appBar: userWatching
+                  ? AppBar(
+                      title: Text(context.read<PixelsCubit>().username),
+                    )
+                  : AppBar(
+                      backgroundColor: Color(0xFF313338),
+                      actions: [
+                        ColorPicker(),
+                      ],
+                    ),
               body: Center(
                 child: InteractiveViewer(
                   constrained: false,
@@ -53,20 +61,19 @@ class BoardScreen extends StatelessWidget {
                       ],
                     ),
                     child: Listener(
-                      onPointerDown: (event) {
-                        if (isMobile(context) ||
-                            HardwareKeyboard
-                                .instance.physicalKeysPressed.isEmpty) {
-                          final color = context.read<ColorCubit>().state;
-                          context.read<PixelsCubit>().writePixel(
-                                event.localPosition,
-                                color,
-                              );
-                        }
-                      },
-                      onPointerMove: (event) {
-                        context.read<PixelsCubit>().cancelPendingWrite();
-                      },
+                      onPointerDown: userWatching
+                          ? null
+                          : (event) {
+                              if (isMobile(context) ||
+                                  HardwareKeyboard
+                                      .instance.physicalKeysPressed.isEmpty) {
+                                final color = context.read<ColorCubit>().state;
+                                context.read<PixelsCubit>().writePixel(
+                                      event.localPosition,
+                                      color,
+                                    );
+                              }
+                            },
                       child: CustomPaint(
                         size: const Size(1920, 1080),
                         painter: BoardPainter(
@@ -77,7 +84,8 @@ class BoardScreen extends StatelessWidget {
                   ),
                 ),
               )),
-          PixelsInitial() => SelectUsernameScreen(),
+          PixelsInitial() =>
+            userWatching ? LoadingScreen() : SelectUsernameScreen(),
         };
       },
     );

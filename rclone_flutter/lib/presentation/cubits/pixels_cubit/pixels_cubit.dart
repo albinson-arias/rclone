@@ -19,10 +19,12 @@ class PixelsCubit extends Cubit<PixelsState> {
   Timer? writeTimer;
   String username = '';
   final viewTransformationController = TransformationController();
+  StreamSubscription<Board>? pixelsStream;
 
   @override
   Future<void> close() async {
     viewTransformationController.dispose();
+    await pixelsStream?.cancel();
     super.close();
   }
 
@@ -33,35 +35,44 @@ class PixelsCubit extends Cubit<PixelsState> {
     viewTransformationController.value.setEntry(2, 2, zoomFactor);
   }
 
-  Future<void> loadPixels(String user) async {
+  Future<void> loadPixels(String user, {bool isWatching = false}) async {
     username = user.toLowerCase();
     emit(PixelsLoading());
-    while (true) {
-      try {
-        // Get the stream of updates from the server.
-        final pixelUpdates = _client.board.listenToBoard();
+    // while (true) {
+    try {
+      // Get the stream of updates from the server.
+      final pixelUpdates = isWatching
+          ? _client.board.listenToUserBoard(user)
+          : _client.board.listenToBoard();
 
-        // Listen for updates from the stream. The await for construct will
-        // wait for a message to arrive from the server, then run through the
-        // body of the loop.
-        await for (final board in pixelUpdates) {
-          // Check which type of update we have received.
-          if (state is PixelsLoading) {
-            emit(PixelsLoaded(pixels: board.pixels));
-          } else {
-            final actualState = state as PixelsLoaded;
-            emit(
-                PixelsLoaded(pixels: [...actualState.pixels, ...board.pixels]));
-          }
-        }
-      } catch (_) {
-        // We lost the connection to the server, or failed to connect.
-        emit(PixelsLoading());
-      }
-
+      pixelsStream = pixelUpdates.listen(
+          (board) {
+            // Check which type of update we have received.
+            if (state is PixelsLoading) {
+              emit(PixelsLoaded(pixels: board.pixels));
+            } else {
+              final actualState = state as PixelsLoaded;
+              emit(PixelsLoaded(
+                  pixels: [...actualState.pixels, ...board.pixels]));
+            }
+          },
+          cancelOnError: true,
+          onError: (_) async {
+            retryLoadPixels(user, isWatching);
+          });
+    } catch (_) {
+      // We lost the connection to the server, or failed to connect.
       // Wait 5 seconds until we try to connect again.
-      await Future.delayed(Duration(seconds: 5));
+      retryLoadPixels(user, isWatching);
     }
+    // }
+  }
+
+  Future<void> retryLoadPixels(String user, bool isWatching) async {
+    emit(PixelsLoading());
+    debugPrint('retrying in 5...');
+    await Future.delayed(Duration(seconds: 5));
+    loadPixels(user, isWatching: isWatching);
   }
 
   void writePixel(Offset offset, Color color) {
@@ -85,9 +96,5 @@ class PixelsCubit extends Cubit<PixelsState> {
     _client.board.writePixel(pixel);
     // },
     // );
-  }
-
-  void cancelPendingWrite() {
-    // writeTimer?.cancel();
   }
 }

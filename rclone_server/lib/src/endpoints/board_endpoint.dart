@@ -1,4 +1,5 @@
 import 'package:rclone_server/src/generated/protocol.dart';
+import 'package:rclone_server/src/queries/board_endpoint_sql_queries.dart';
 import 'package:serverpod/serverpod.dart';
 
 class BoardEndpoint extends Endpoint {
@@ -68,16 +69,10 @@ class BoardEndpoint extends Endpoint {
   }
 
   Future<List<String>> getUsers(Session session) async {
-    final result = await BoardPixel.db.find(
-      session,
-    );
+    final result = await session.db.unsafeQuery(getUsersSQLQuery);
 
-    final uniqueUsernames = result.map((e) => e.username).toSet().toList();
-    session.log(
-      'UniqueUsers count: ${uniqueUsernames.length}',
-      level: LogLevel.info,
-    );
+    final usernames = result.map((element) => element.first as String).toList();
 
-    return uniqueUsernames;
+    return usernames;
   }
 }
