@@ -10,6 +10,7 @@ class BoardEndpoint extends Endpoint {
     return '$_channelUserBoardPixelAdded$username';
   }
 
+  /// Writes a pixel on the board.
   Future<void> writePixel(Session session, BoardPixel pixel) async {
     await session.db.transaction(
       (transaction) async {
@@ -68,6 +69,8 @@ class BoardEndpoint extends Endpoint {
     }
   }
 
+  /// Returns a list of all users which have written at least
+  /// a pixel on the board
   Future<List<String>> getUsers(Session session) async {
     final result = await session.db.unsafeQuery(getUsersSQLQuery);
 
